@@ -4,7 +4,20 @@ Todas las modificaciones, mejoras y correcciones de **TaskFlow** se documentan e
 
 ---
 
+## [2.1.0] - 2026-08-10
+
+### 📅 Agrupamiento Histórico por Fecha Colapsable (Estilo Banca Móvil)
+- **Agrupación Automática por Día**: En las pestañas **Completadas** y **Todas**, las tareas se organizan en bloques según su fecha (`Hoy`, `Ayer`, o nombre del día de la semana).
+- **Orden Histórico Descendente**: El bloque más reciente (ej. *Hoy*) se posiciona arriba del todo.
+- **Secciones Colapsables (Acordeón)**:
+  - **El primer día (más reciente)** está **descolapsado / abierto** por defecto.
+  - **Los días más antiguos** se muestran **colapsados / cerrados** por defecto para evitar listas infinitas.
+  - Cada bloque cuenta con su encabezado interactivo con icono de calendario, insignia con el conteo de tareas y flecha para abrir/cerrar.
+
+---
+
 ## [2.0.0] - 2026-08-10
+
 
 ### 🚀 Versión Oficial de Producción & Auto-Actualizaciones PWA
 - **Detección Automática de Actualizaciones PWA**: Creación de [usePWAUpdate.ts](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/src/hooks/usePWAUpdate.ts) y [PWAUpdateModal.tsx](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/src/components/PWAUpdateModal.tsx) para alertar al usuario inmediatamente cuando una nueva versión se despliega en el servidor.
