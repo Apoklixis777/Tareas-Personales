@@ -291,7 +291,18 @@ export const AjustesScreen: React.FC<AjustesScreenProps> = ({
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
                   {/* 1. Cálido (Terracota) */}
                   <div
-                    onClick={() => setTheme('warm')}
+                    onClick={() => {
+                      setTheme('warm');
+                      onSaveProfile({
+                        nombre: nombre.trim(),
+                        apellidos: apellidos.trim(),
+                        avatarUrl: avatarUrl.trim(),
+                        bio: bio.trim(),
+                        theme: 'warm',
+                        plan: userProfile.plan || 'PERFIL PERSONAL',
+                      });
+                      onShowToast('Tema cambiado a Cálido (Terracota)');
+                    }}
                     className={`p-4 rounded-2xl border-2 transition-all cursor-pointer flex flex-col items-center text-center gap-2 relative overflow-hidden ${
                       theme === 'warm'
                         ? 'border-[#ac2d00] bg-[#fff8f5] ring-2 ring-[#ac2d00]/20 shadow-md'
@@ -312,7 +323,18 @@ export const AjustesScreen: React.FC<AjustesScreenProps> = ({
 
                   {/* 2. Claro Neutro */}
                   <div
-                    onClick={() => setTheme('light')}
+                    onClick={() => {
+                      setTheme('light');
+                      onSaveProfile({
+                        nombre: nombre.trim(),
+                        apellidos: apellidos.trim(),
+                        avatarUrl: avatarUrl.trim(),
+                        bio: bio.trim(),
+                        theme: 'light',
+                        plan: userProfile.plan || 'PERFIL PERSONAL',
+                      });
+                      onShowToast('Tema cambiado a Claro Neutro');
+                    }}
                     className={`p-4 rounded-2xl border-2 transition-all cursor-pointer flex flex-col items-center text-center gap-2 relative overflow-hidden ${
                       theme === 'light'
                         ? 'border-[#4f46e5] bg-[#f8fafc] ring-2 ring-[#4f46e5]/20 shadow-md'
@@ -333,7 +355,18 @@ export const AjustesScreen: React.FC<AjustesScreenProps> = ({
 
                   {/* 3. Oscuro Elegante */}
                   <div
-                    onClick={() => setTheme('dark')}
+                    onClick={() => {
+                      setTheme('dark');
+                      onSaveProfile({
+                        nombre: nombre.trim(),
+                        apellidos: apellidos.trim(),
+                        avatarUrl: avatarUrl.trim(),
+                        bio: bio.trim(),
+                        theme: 'dark',
+                        plan: userProfile.plan || 'PERFIL PERSONAL',
+                      });
+                      onShowToast('Tema cambiado a Oscuro Elegante 🌙');
+                    }}
                     className={`p-4 rounded-2xl border-2 transition-all cursor-pointer flex flex-col items-center text-center gap-2 relative overflow-hidden ${
                       theme === 'dark'
                         ? 'border-[#f97316] bg-[#0f172a] text-white ring-2 ring-[#f97316]/20 shadow-md'
@@ -353,6 +386,7 @@ export const AjustesScreen: React.FC<AjustesScreenProps> = ({
                   </div>
                 </div>
               </div>
+
 
               {/* Action Button */}
 
