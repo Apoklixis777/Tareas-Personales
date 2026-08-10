@@ -4,7 +4,16 @@ Todas las modificaciones, mejoras y correcciones de **TaskFlow** se documentan e
 
 ---
 
+## [2.1.3] - 2026-08-10
+
+### 🛡️ Eliminación de Doble Carga & Aislamiento de Entorno Dev
+- **Desactivación de SW en Desarrollo (`import.meta.env.DEV`)**: Configurado en [usePWAUpdate.ts](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/src/hooks/usePWAUpdate.ts) la desinstalación automática de cualquier Service Worker en modo desarrollo, solucionando la interferencia con el servidor HMR de Vite y eliminando al 100% el parpadeo de "doble carga".
+- **Removido `self.clients.claim()` de [sw.js](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/public/sw.js)**: Evita que el Service Worker tome el control forzado de pestañas activas en segundo plano, garantizando una carga suave e instantánea.
+
+---
+
 ## [2.1.2] - 2026-08-10
+
 
 ### 🛠️ Corrección Crítica de Service Worker & Bucle de Recarga PWA
 - **Eliminación del Bucle de Recargas (`usePWAUpdate.ts`)**: Se eliminó la escucha automática de `controllerchange` que provocaba un bucle infinito de reinicios del navegador al cargar la PWA.

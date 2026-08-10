@@ -7,7 +7,17 @@ export function usePWAUpdate() {
   useEffect(() => {
     if (typeof window === 'undefined' || !('serviceWorker' in navigator)) return;
 
-    // Register Service Worker safely
+    // In Vite Development Mode, unregister any service workers to prevent dev server double-loads
+    if (import.meta.env.DEV) {
+      navigator.serviceWorker.getRegistrations().then((registrations) => {
+        registrations.forEach((registration) => {
+          registration.unregister();
+        });
+      });
+      return;
+    }
+
+    // Production Service Worker registration & update tracking
     navigator.serviceWorker.register('/sw.js').then((registration) => {
       // Check if there is already a waiting worker
       if (registration.waiting) {
