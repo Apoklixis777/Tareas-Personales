@@ -4,7 +4,17 @@ Todas las modificaciones, mejoras y correcciones de **TaskFlow** se documentan e
 
 ---
 
+## [2.1.2] - 2026-08-10
+
+### 🛠️ Corrección Crítica de Service Worker & Bucle de Recarga PWA
+- **Eliminación del Bucle de Recargas (`usePWAUpdate.ts`)**: Se eliminó la escucha automática de `controllerchange` que provocaba un bucle infinito de reinicios del navegador al cargar la PWA.
+- **Registro Único del Service Worker**: Se consolidó el registro de `sw.js` evitando registros duplicados entre `index.html` y React.
+- **Actualización Controlada**: La recarga de la aplicación se ejecuta **exclusivamente al presionar el botón `Actualizar Aplicación`** en el modal, protegiendo al 100% los datos de `LocalStorage`.
+
+---
+
 ## [2.1.1] - 2026-08-10
+
 
 ### 🎯 Acordeón de Fecha Exclusivo (Un solo grupo abierto a la vez)
 - **Modo Exclusivo en Completadas y Todas**: Configuración de `expandedGroupKey` en [MisTareasScreen.tsx](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/src/components/MisTareasScreen.tsx#L130-L155) para que **únicamente el bloque de fecha más reciente esté descolapsado** por defecto.

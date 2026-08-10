@@ -5,20 +5,9 @@ export function usePWAUpdate() {
   const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(null);
 
   useEffect(() => {
-    if (!('serviceWorker' in navigator)) return;
+    if (typeof window === 'undefined' || !('serviceWorker' in navigator)) return;
 
-    // Track when controller changes to trigger window reload
-    let refreshing = false;
-    const handleControllerChange = () => {
-      if (!refreshing) {
-        refreshing = true;
-        window.location.reload();
-      }
-    };
-
-    navigator.serviceWorker.addEventListener('controllerchange', handleControllerChange);
-
-    // Register / handle Service Worker
+    // Register Service Worker safely
     navigator.serviceWorker.register('/sw.js').then((registration) => {
       // Check if there is already a waiting worker
       if (registration.waiting) {
@@ -41,15 +30,14 @@ export function usePWAUpdate() {
     }).catch((err) => {
       console.error('Error registrando Service Worker:', err);
     });
-
-    return () => {
-      navigator.serviceWorker.removeEventListener('controllerchange', handleControllerChange);
-    };
   }, []);
 
   const updateApp = () => {
     if (waitingWorker) {
       waitingWorker.postMessage({ type: 'SKIP_WAITING' });
+      setTimeout(() => {
+        window.location.reload();
+      }, 300);
     } else {
       window.location.reload();
     }
