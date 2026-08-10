@@ -1,0 +1,6 @@
+{
+  "name": "TaskFlow",
+  "description": "Gestor de tareas y ajustes de usuario con navegación fluida y persistencia de datos.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
