@@ -4,7 +4,16 @@ Todas las modificaciones, mejoras y correcciones de **TaskFlow** se documentan e
 
 ---
 
+## [2.1.4] - 2026-08-10
+
+### 🔄 Sincronización de Versión de Service Worker (`public/sw.js`)
+- **Actualización de Nombre de Caché (`taskflow-v2.1.4`)**: Sincronización de `CACHE_NAME` en [public/sw.js](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/public/sw.js) con el número de versión oficial.
+- **Activación del Modal de Actualización PWA**: Al cambiar el contenido del Service Worker byte a byte, el navegador detecta automáticamente la actualización disponible al desplegar la build y despliega el modal interactivo `PWAUpdateModal`.
+
+---
+
 ## [2.1.3] - 2026-08-10
+
 
 ### 🛡️ Eliminación de Doble Carga & Aislamiento de Entorno Dev
 - **Desactivación de SW en Desarrollo (`import.meta.env.DEV`)**: Configurado en [usePWAUpdate.ts](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/src/hooks/usePWAUpdate.ts) la desinstalación automática de cualquier Service Worker en modo desarrollo, solucionando la interferencia con el servidor HMR de Vite y eliminando al 100% el parpadeo de "doble carga".
