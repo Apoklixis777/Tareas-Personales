@@ -4,7 +4,16 @@ Todas las modificaciones, mejoras y correcciones de **TaskFlow** se documentan e
 
 ---
 
+## [2.1.1] - 2026-08-10
+
+### 🎯 Acordeón de Fecha Exclusivo (Un solo grupo abierto a la vez)
+- **Modo Exclusivo en Completadas y Todas**: Configuración de `expandedGroupKey` en [MisTareasScreen.tsx](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/src/components/MisTareasScreen.tsx#L130-L155) para que **únicamente el bloque de fecha más reciente esté descolapsado** por defecto.
+- **Transición Dinámica al Abrir**: Al hacer clic en un grupo colapsado, este se despliega y cualquier otro grupo abierto se colapsa automáticamente, manteniendo la pantalla impecable y sin desbordamientos.
+
+---
+
 ## [2.1.0] - 2026-08-10
+
 
 ### 📅 Agrupamiento Histórico por Fecha Colapsable (Estilo Banca Móvil)
 - **Agrupación Automática por Día**: En las pestañas **Completadas** y **Todas**, las tareas se organizan en bloques según su fecha (`Hoy`, `Ayer`, o nombre del día de la semana).

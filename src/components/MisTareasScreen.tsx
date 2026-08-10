@@ -129,7 +129,7 @@ export const MisTareasScreen: React.FC<MisTareasScreenProps> = ({
   const [editDueDate, setEditDueDate] = useState<string>('');
   const [currentTime, setCurrentTime] = useState<number>(Date.now());
   const [selectedTaskForDescription, setSelectedTaskForDescription] = useState<Task | null>(null);
-  const [collapsedGroups, setCollapsedGroups] = useState<Record<string, boolean>>({});
+  const [expandedGroupKey, setExpandedGroupKey] = useState<string | undefined>(undefined);
 
   // Auto-update current time every 30s to keep progress bars alive
   useEffect(() => {
@@ -137,19 +137,25 @@ export const MisTareasScreen: React.FC<MisTareasScreenProps> = ({
     return () => clearInterval(timer);
   }, []);
 
+  // Reset active expanded group whenever tab filter changes
+  useEffect(() => {
+    setExpandedGroupKey(undefined);
+  }, [filter]);
+
   const toggleGroupCollapse = (dateKey: string, isDefaultFirst: boolean) => {
-    setCollapsedGroups((prev) => {
-      const isCurrentlyCollapsed = prev[dateKey] !== undefined ? prev[dateKey] : !isDefaultFirst;
-      return { ...prev, [dateKey]: !isCurrentlyCollapsed };
+    setExpandedGroupKey((prev) => {
+      const activeKey = prev === undefined ? (isDefaultFirst ? dateKey : null) : prev;
+      return activeKey === dateKey ? 'NONE' : dateKey;
     });
   };
 
   const checkIsGroupCollapsed = (dateKey: string, isDefaultFirst: boolean): boolean => {
-    if (collapsedGroups[dateKey] !== undefined) {
-      return collapsedGroups[dateKey];
+    if (expandedGroupKey === undefined) {
+      return !isDefaultFirst; // Default: Only first/most recent date group is expanded, others collapsed
     }
-    return !isDefaultFirst;
+    return expandedGroupKey !== dateKey; // Exclusive accordion: Only expandedGroupKey is open
   };
+
 
 
 
