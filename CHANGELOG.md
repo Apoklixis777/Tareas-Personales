@@ -4,7 +4,26 @@ Todas las modificaciones, mejoras y correcciones de **TaskFlow** se documentan e
 
 ---
 
+## [2.0.0] - 2026-08-10
+
+### 🚀 Versión Oficial de Producción & Auto-Actualizaciones PWA
+- **Detección Automática de Actualizaciones PWA**: Creación de [usePWAUpdate.ts](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/src/hooks/usePWAUpdate.ts) y [PWAUpdateModal.tsx](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/src/components/PWAUpdateModal.tsx) para alertar al usuario inmediatamente cuando una nueva versión se despliega en el servidor.
+- **Modal de Actualización Obligatorio**: Presenta la notificación **"¡Nueva Versión de TaskFlow Disponible!"** con un único botón de acción **`🔄 Actualizar Aplicación`** que activa el nuevo Service Worker y recarga la pestaña automáticamente.
+- **Actualización del Service Worker (`taskflow-v2.0.0`)**: [sw.js](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/public/sw.js) soporta el evento de mensaje `SKIP_WAITING` y la gestión limpia de caché.
+- **Auditoría de Seguridad Exhaustiva**: Verificación de sanitización Anti-XSS en avatars y campos de texto, validación estricta de esquemas de datos en `LocalStorage` y gestión de errores con `ErrorBoundary.tsx`.
+
+---
+
+## [1.9.1] - 2026-08-10
+
+### 🐛 Corrección de Sobrescrituras CSS de Temas (Parche Hotfix)
+- **Transición de Temas en Vivo**: Añadido en [index.css](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/src/index.css#L60-L170) el mapeo de clases de Tailwind fijos (`bg-[#fff8f5]`, `bg-white`, `text-[#1e1b18]`, `bg-[#fbf2ed]`, etc.) vinculado a `[data-theme="light"]` y `[data-theme="dark"]`.
+- **Previsualización Instantánea en Ajustes**: Configurado en [AjustesScreen.tsx](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/src/components/AjustesScreen.tsx#L290-L360) para aplicar y guardar el tema de inmediato al hacer clic en las tarjetas de previsualización.
+
+---
+
 ## [1.9.0] - 2026-08-10
+
 
 ### 🎨 Sistema Multi-Tema (Cálido, Claro y Oscuro) & Sincronización PWA
 - **Soporte de 3 Temas Visuales (`theme?: ThemeType`)**:

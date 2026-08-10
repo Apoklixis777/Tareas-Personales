@@ -1,4 +1,4 @@
-const CACHE_NAME = 'taskflow-v1';
+const CACHE_NAME = 'taskflow-v2.0.0';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
@@ -9,6 +9,12 @@ const ASSETS_TO_CACHE = [
   '/apple-touch-icon.png'
 ];
 
+self.addEventListener('message', (event) => {
+  if (event.data && (event.data === 'SKIP_WAITING' || event.data.type === 'SKIP_WAITING')) {
+    self.skipWaiting();
+  }
+});
+
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -17,6 +23,7 @@ self.addEventListener('install', (event) => {
   );
   self.skipWaiting();
 });
+
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(

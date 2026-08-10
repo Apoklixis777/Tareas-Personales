@@ -5,6 +5,8 @@ import { MisTareasScreen } from './components/MisTareasScreen';
 import { AjustesScreen } from './components/AjustesScreen';
 import { Toast } from './components/Toast';
 import { OnboardingModal } from './components/OnboardingModal';
+import { PWAUpdateModal } from './components/PWAUpdateModal';
+import { usePWAUpdate } from './hooks/usePWAUpdate';
 import { Task, UserProfile, ScreenType, TaskPriority } from './types';
 import {
   loadTasksFromStorage,
@@ -25,7 +27,9 @@ const DEFAULT_PROFILE: UserProfile = {
 };
 
 export default function App() {
+  const { hasUpdate, updateApp } = usePWAUpdate();
   const [currentScreen, setCurrentScreen] = useState<ScreenType>('mis-tareas');
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -220,11 +224,15 @@ export default function App() {
       />
 
 
+      {/* Mandatory PWA Update Modal */}
+      <PWAUpdateModal isOpen={hasUpdate} onUpdate={updateApp} />
+
       {/* Toast Notification */}
       <Toast message={toastMessage} onClose={() => setToastMessage(null)} />
     </div>
   );
 }
+
 
 
 
