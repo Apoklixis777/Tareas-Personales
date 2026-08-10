@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { UserProfile, ScreenType } from '../types';
+import { UserProfile, ScreenType, ThemeType } from '../types';
 
 interface HeaderProps {
   userProfile: UserProfile;
   onNavigate: (screen: ScreenType) => void;
+  onSaveProfile?: (profile: UserProfile) => void;
   onToggleMobileMenu?: () => void;
   isMobileMenuOpen?: boolean;
 }
@@ -11,6 +12,7 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({
   userProfile,
   onNavigate,
+  onSaveProfile,
   onToggleMobileMenu,
   isMobileMenuOpen,
 }) => {
@@ -23,6 +25,26 @@ export const Header: React.FC<HeaderProps> = ({
     const firstInitial = n ? n[0].toUpperCase() : 'U';
     const lastInitial = a ? a[0].toUpperCase() : 'D';
     return `${firstInitial}${lastInitial}`;
+  };
+
+  const handleToggleTheme = () => {
+    const current = userProfile.theme || 'warm';
+    const nextTheme: ThemeType = current === 'warm' ? 'light' : current === 'light' ? 'dark' : 'warm';
+    if (onSaveProfile) {
+      onSaveProfile({ ...userProfile, theme: nextTheme });
+    }
+  };
+
+  const getThemeIcon = () => {
+    switch (userProfile.theme) {
+      case 'light':
+        return 'light_mode';
+      case 'dark':
+        return 'dark_mode';
+      case 'warm':
+      default:
+        return 'palette';
+    }
   };
 
   return (
@@ -62,9 +84,22 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
 
       {/* Profile & Quick Settings action */}
-      <div id="header-right-actions" className="flex items-center gap-3 ml-auto">
+      <div id="header-right-actions" className="flex items-center gap-2.5 ml-auto">
+        {/* Quick Theme Switcher Button */}
+        {onSaveProfile && (
+          <button
+            type="button"
+            onClick={handleToggleTheme}
+            className="p-2 rounded-xl text-[#5b4139] hover:bg-[#efe6e2] hover:text-[#ac2d00] transition-colors cursor-pointer flex items-center justify-center border border-transparent hover:border-[#e4beb4]/60"
+            title={`Tema actual: ${userProfile.theme || ' warm'}. Hacer clic para cambiar de tema`}
+          >
+            <span className="material-symbols-outlined text-[22px]">{getThemeIcon()}</span>
+          </button>
+        )}
+
         <button
           id="btn-profile-header"
+
           type="button"
           onClick={() => onNavigate('ajustes')}
           className="flex items-center gap-3 pl-3 py-1 rounded-2xl hover:bg-[#efe6e2]/60 transition-all text-left cursor-pointer group"

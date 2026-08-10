@@ -4,7 +4,22 @@ Todas las modificaciones, mejoras y correcciones de **TaskFlow** se documentan e
 
 ---
 
+## [1.9.0] - 2026-08-10
+
+### 🎨 Sistema Multi-Tema (Cálido, Claro y Oscuro) & Sincronización PWA
+- **Soporte de 3 Temas Visuales (`theme?: ThemeType`)**:
+  - 🌅 **Cálido / Terracota (`'warm'`) [Predeterminado]**: Paleta original rica en tonos terracota, ámbar y durazno suave.
+  - ☀️ **Claro Neutro (`'light'`)**: Estilo moderno limpio con acentos índigo (`#4f46e5`), tarjetas blancas puras y fondos neutros.
+  - 🌙 **Oscuro Elegante (`'dark'`)**: Modo oscuro refinado con fondos carbón profundo (`#0f172a`), tarjetas pizarra y destellos de color naranja vibrante (`#f97316`).
+- **Selector Visual en Ajustes**: Tarjetas interactivas con previsualizaciones de cada tema en [AjustesScreen.tsx](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/src/components/AjustesScreen.tsx#L280-L360).
+- **Conmutador Rápido en Header**: Botón de alternancia rápida con icono dinámico (Sol/Luna/Paleta) en la barra superior para cambiar de tema al instante desde cualquier pantalla.
+- **Sincronización PWA Dinámica**: Actualización en tiempo real del atributo `data-theme` y de la meta etiqueta `<meta name="theme-color">` de la aplicación web y PWA.
+- **Persistencia de Apariencia**: Guardado automático de la preferencia de tema en `LocalStorage`.
+
+---
+
 ## [1.8.0] - 2026-08-10
+
 
 ### 📄 Descripción Larga de Tareas & Rediseño de Perfil ("Un poco sobre ti")
 - **Campo de Descripción Opcional**: Añadido soporte para descripciones largas en la creación y edición de tareas (`description?: string`).

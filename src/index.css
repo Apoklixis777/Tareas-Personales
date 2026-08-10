@@ -1,50 +1,61 @@
 @import "tailwindcss";
 
-@theme {
-  --color-brand-50: #fff5f2;
-  --color-brand-100: #ffe6de;
-  --color-brand-200: #ffc9ba;
-  --color-brand-300: #ffa18a;
-  --color-brand-400: #ff6b4a;
-  --color-brand-500: #d53e0b;
-  --color-brand-600: #ac2d00;
-  --color-brand-700: #8f2300;
-  --color-brand-800: #741d00;
-  --color-brand-900: #5d1a04;
-
-  --color-warm-bg: #fff8f5;
-  --color-warm-card: #ffffff;
-  --color-warm-sidebar: #fbf2ed;
-  --color-warm-accent: #f5ece7;
-  --color-warm-[#efe6e2]: #efe6e2;
-
-  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-
 @layer base {
+  :root,
+  [data-theme="warm"] {
+    --bg-main: #fff8f5;
+    --text-main: #1e1b18;
+    --text-muted: #5b4139;
+    --card-bg: #ffffff;
+    --card-border: #efe6e2;
+    --sidebar-bg: #fbf2ed;
+    --header-bg: rgba(255, 248, 245, 0.92);
+  }
+
+  [data-theme="light"] {
+    --bg-main: #f8fafc;
+    --text-main: #0f172a;
+    --text-muted: #475569;
+    --card-bg: #ffffff;
+    --card-border: #e2e8f0;
+    --sidebar-bg: #ffffff;
+    --header-bg: rgba(248, 250, 252, 0.92);
+  }
+
+  [data-theme="dark"] {
+    --bg-main: #0f172a;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --card-bg: #1e293b;
+    --card-border: #334155;
+    --sidebar-bg: #1e293b;
+    --header-bg: rgba(15, 23, 42, 0.92);
+  }
+
   html, body {
-    background-color: var(--color-warm-bg, #fff8f5);
-    color: #1e1b18;
-    font-family: var(--font-sans);
+    background-color: var(--bg-main, #fff8f5);
+    color: var(--text-main, #1e1b18);
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     -webkit-tap-highlight-color: transparent;
     overflow-x: hidden;
     max-width: 100vw;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
 
-
-/* Custom scrollbar for warm aesthetic */
+/* Custom scrollbars adaptados */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #fbf2ed;
+  background: var(--sidebar-bg, #fbf2ed);
 }
 ::-webkit-scrollbar-thumb {
-  background: #e4beb4;
+  background: #d53e0b;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #d53e0b;
+  background: #ac2d00;
 }
+

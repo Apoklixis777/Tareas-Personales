@@ -23,12 +23,16 @@ export interface Task {
 
 
 
+export type ThemeType = 'warm' | 'light' | 'dark';
+
 export interface UserProfile {
   nombre: string;
   apellidos: string;
   avatarUrl: string;
   bio?: string; // "Un poco sobre ti"
+  theme?: ThemeType; // tema visual seleccionado ('warm' por defecto)
   plan?: string;
 }
+
 
 

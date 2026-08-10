@@ -65,11 +65,13 @@ export function loadProfileFromStorage(fallback: UserProfile): UserProfile {
     if (!raw) return fallback;
     const parsed = JSON.parse(raw);
     if (parsed && typeof parsed === 'object') {
+      const validTheme = ['warm', 'light', 'dark'].includes(parsed.theme) ? parsed.theme : 'warm';
       return {
         nombre: typeof parsed.nombre === 'string' ? parsed.nombre.trim() : fallback.nombre,
         apellidos: typeof parsed.apellidos === 'string' ? parsed.apellidos.trim() : fallback.apellidos,
         avatarUrl: sanitizeAvatarUrl(parsed.avatarUrl),
         bio: typeof parsed.bio === 'string' ? parsed.bio.trim() : fallback.bio,
+        theme: validTheme,
         plan: typeof parsed.plan === 'string' ? parsed.plan : fallback.plan,
       };
     }
@@ -90,9 +92,11 @@ export function saveProfileToStorage(profile: UserProfile): boolean {
       apellidos: profile.apellidos.trim(),
       avatarUrl: sanitizeAvatarUrl(profile.avatarUrl),
       bio: profile.bio ? profile.bio.trim() : undefined,
+      theme: profile.theme || 'warm',
     };
     localStorage.setItem(PROFILE_KEY, JSON.stringify(sanitizedProfile));
     return true;
+
   } catch (error) {
     console.error('Error de escritura en LocalStorage para perfil:', error);
     return false;

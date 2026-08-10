@@ -48,6 +48,28 @@ export default function App() {
     saveProfileToStorage(userProfile);
   }, [userProfile]);
 
+  // Synchronize theme with html data-theme attribute and meta theme-color tag
+  useEffect(() => {
+    const activeTheme = userProfile.theme || 'warm';
+    document.documentElement.setAttribute('data-theme', activeTheme);
+    if (activeTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    if (metaThemeColor) {
+      const colorMap = {
+        warm: '#ac2d00',
+        light: '#4f46e5',
+        dark: '#0f172a',
+      };
+      metaThemeColor.setAttribute('content', colorMap[activeTheme] || '#ac2d00');
+    }
+  }, [userProfile.theme]);
+
+
 
   // Listen to hash changes for navigation
   useEffect(() => {
@@ -163,9 +185,11 @@ export default function App() {
       <Header
         userProfile={userProfile}
         onNavigate={setCurrentScreen}
+        onSaveProfile={handleSaveProfile}
         isMobileMenuOpen={isMobileMenuOpen}
         onToggleMobileMenu={() => setIsMobileMenuOpen((prev) => !prev)}
       />
+
 
       {/* Main Content Area */}
       <main className="pl-0 md:pl-72 pt-16 flex-1 min-h-[calc(100vh-64px)] transition-all duration-300">

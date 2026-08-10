@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { UserProfile } from '../types';
+import { UserProfile, ThemeType } from '../types';
 import { compressImageFile } from '../utils/image';
 
 interface AjustesScreenProps {
@@ -24,6 +24,7 @@ export const AjustesScreen: React.FC<AjustesScreenProps> = ({
   const [apellidos, setApellidos] = useState(userProfile.apellidos || '');
   const [avatarUrl, setAvatarUrl] = useState(userProfile.avatarUrl || '');
   const [bio, setBio] = useState(userProfile.bio || '');
+  const [theme, setTheme] = useState<ThemeType>(userProfile.theme || 'warm');
   const [isSaving, setIsSaving] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -35,6 +36,7 @@ export const AjustesScreen: React.FC<AjustesScreenProps> = ({
     setApellidos(userProfile.apellidos || '');
     setAvatarUrl(userProfile.avatarUrl || '');
     setBio(userProfile.bio || '');
+    setTheme(userProfile.theme || 'warm');
     setImageError(false);
   }, [userProfile]);
 
@@ -75,12 +77,14 @@ export const AjustesScreen: React.FC<AjustesScreenProps> = ({
         apellidos: apellidos.trim(),
         avatarUrl: avatarUrl.trim(),
         bio: bio.trim(),
+        theme,
         plan: userProfile.plan || 'PERFIL PERSONAL',
       });
       setIsSaving(false);
       onShowToast('Perfil de usuario guardado correctamente');
     }, 400);
   };
+
 
 
   return (
@@ -274,8 +278,84 @@ export const AjustesScreen: React.FC<AjustesScreenProps> = ({
                 </div>
               </div>
 
+              {/* Apariencia y Tema Visual */}
+              <div className="pt-6 border-t border-[#efe6e2] space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="material-symbols-outlined text-[#ac2d00] text-[22px]">palette</span>
+                  <div>
+                    <h3 className="text-base font-bold text-[#1e1b18]">Apariencia y Tema Visual</h3>
+                    <p className="text-xs text-[#5b4139]">Elige el tema que mejor se adapte a tu estilo visual</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+                  {/* 1. Cálido (Terracota) */}
+                  <div
+                    onClick={() => setTheme('warm')}
+                    className={`p-4 rounded-2xl border-2 transition-all cursor-pointer flex flex-col items-center text-center gap-2 relative overflow-hidden ${
+                      theme === 'warm'
+                        ? 'border-[#ac2d00] bg-[#fff8f5] ring-2 ring-[#ac2d00]/20 shadow-md'
+                        : 'border-[#efe6e2] bg-white hover:border-[#e4beb4]'
+                    }`}
+                  >
+                    {theme === 'warm' && (
+                      <span className="absolute top-2 right-2 text-[#ac2d00] material-symbols-outlined text-[18px]">check_circle</span>
+                    )}
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#ac2d00] to-[#ff9800] text-white flex items-center justify-center shadow-xs">
+                      <span className="material-symbols-outlined text-[20px]">wb_sunny</span>
+                    </div>
+                    <div>
+                      <div className="text-xs font-bold text-[#1e1b18]">Cálido (Predeterminado)</div>
+                      <div className="text-[10px] text-[#5b4139]">Tonos terracota & durazno</div>
+                    </div>
+                  </div>
+
+                  {/* 2. Claro Neutro */}
+                  <div
+                    onClick={() => setTheme('light')}
+                    className={`p-4 rounded-2xl border-2 transition-all cursor-pointer flex flex-col items-center text-center gap-2 relative overflow-hidden ${
+                      theme === 'light'
+                        ? 'border-[#4f46e5] bg-[#f8fafc] ring-2 ring-[#4f46e5]/20 shadow-md'
+                        : 'border-[#efe6e2] bg-white hover:border-[#cbd5e1]'
+                    }`}
+                  >
+                    {theme === 'light' && (
+                      <span className="absolute top-2 right-2 text-[#4f46e5] material-symbols-outlined text-[18px]">check_circle</span>
+                    )}
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#4f46e5] to-[#06b6d4] text-white flex items-center justify-center shadow-xs">
+                      <span className="material-symbols-outlined text-[20px]">light_mode</span>
+                    </div>
+                    <div>
+                      <div className="text-xs font-bold text-[#1e1b18]">Claro Neutro</div>
+                      <div className="text-[10px] text-[#5b4139]">Índigo limpio & gris suave</div>
+                    </div>
+                  </div>
+
+                  {/* 3. Oscuro Elegante */}
+                  <div
+                    onClick={() => setTheme('dark')}
+                    className={`p-4 rounded-2xl border-2 transition-all cursor-pointer flex flex-col items-center text-center gap-2 relative overflow-hidden ${
+                      theme === 'dark'
+                        ? 'border-[#f97316] bg-[#0f172a] text-white ring-2 ring-[#f97316]/20 shadow-md'
+                        : 'border-[#efe6e2] bg-[#1e293b] text-slate-200 hover:border-slate-600'
+                    }`}
+                  >
+                    {theme === 'dark' && (
+                      <span className="absolute top-2 right-2 text-[#f97316] material-symbols-outlined text-[18px]">check_circle</span>
+                    )}
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#ea580c] to-[#eab308] text-white flex items-center justify-center shadow-xs">
+                      <span className="material-symbols-outlined text-[20px]">dark_mode</span>
+                    </div>
+                    <div>
+                      <div className="text-xs font-bold">Oscuro Elegante</div>
+                      <div className="text-[10px] opacity-80">Carbón profundo & ámbar</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               {/* Action Button */}
+
               <div className="flex items-center justify-between pt-6 border-t border-[#efe6e2]">
                 <button
                   type="button"
