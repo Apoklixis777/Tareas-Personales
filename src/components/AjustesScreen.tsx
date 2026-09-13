@@ -2,6 +2,19 @@ import React, { useState, useEffect, useRef } from 'react';
 import { UserProfile, ThemeType } from '../types';
 import { compressImageFile } from '../utils/image';
 
+/**
+ * [PARCHE DEFENSIVO SEC-005]
+ * Constantes de límites de entrada para campos del formulario de ajustes.
+ * Previene que datos excesivamente largos lleguen al estado y al LocalStorage.
+ */
+const MAX_NOMBRE_LEN = 64;
+const MAX_APELLIDOS_LEN = 64;
+const MAX_BIO_LEN = 500;
+
+function clampInput(value: string, maxLen: number): string {
+  return value.slice(0, maxLen);
+}
+
 interface AjustesScreenProps {
   userProfile: UserProfile;
   onSaveProfile: (profile: UserProfile) => void;
@@ -229,8 +242,9 @@ export const AjustesScreen: React.FC<AjustesScreenProps> = ({
                     name="nombre"
                     type="text"
                     required
+                    maxLength={MAX_NOMBRE_LEN}
                     value={nombre}
-                    onChange={(e) => setNombre(e.target.value)}
+                    onChange={(e) => setNombre(clampInput(e.target.value, MAX_NOMBRE_LEN))}
                     placeholder="Tu nombre"
                     className="w-full bg-[#fbf2ed] text-[#1e1b18] text-sm rounded-xl px-4 py-3 outline-none transition-all focus:bg-white focus:ring-2 focus:ring-[#ac2d00]/40 border border-transparent focus:border-[#ac2d00]"
                   />
@@ -246,8 +260,9 @@ export const AjustesScreen: React.FC<AjustesScreenProps> = ({
                     name="apellidos"
                     type="text"
                     required
+                    maxLength={MAX_APELLIDOS_LEN}
                     value={apellidos}
-                    onChange={(e) => setApellidos(e.target.value)}
+                    onChange={(e) => setApellidos(clampInput(e.target.value, MAX_APELLIDOS_LEN))}
                     placeholder="Tus apellidos"
                     className="w-full bg-[#fbf2ed] text-[#1e1b18] text-sm rounded-xl px-4 py-3 outline-none transition-all focus:bg-white focus:ring-2 focus:ring-[#ac2d00]/40 border border-transparent focus:border-[#ac2d00]"
                   />
@@ -266,8 +281,9 @@ export const AjustesScreen: React.FC<AjustesScreenProps> = ({
                       id="input-bio"
                       name="bio"
                       rows={3}
+                      maxLength={MAX_BIO_LEN}
                       value={bio}
-                      onChange={(e) => setBio(e.target.value)}
+                      onChange={(e) => setBio(clampInput(e.target.value, MAX_BIO_LEN))}
                       placeholder="Escribe una breve presentación sobre ti (ej: Apasionado por la productividad y el diseño)..."
                       className="w-full bg-[#fbf2ed] text-[#1e1b18] text-sm rounded-xl pl-11 pr-4 py-3 outline-none transition-all focus:bg-white focus:ring-2 focus:ring-[#ac2d00]/40 border border-transparent focus:border-[#ac2d00] resize-y"
                     />

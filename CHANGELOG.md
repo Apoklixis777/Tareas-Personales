@@ -2,6 +2,44 @@
 
 Todas las modificaciones, mejoras y correcciones de **TaskFlow** se documentan en este archivo en orden cronológico inverso siguiendo las directrices de `changelog-generator` y el estándar de Versionado Semántico (SemVer).
 
+## [2.1.6] - 2026-09-13
+
+### 🔄 PWA Cache Invalidation & Network-First Strategy
+- **Renovación de Caché (`taskflow-v2.1.6`)**: Se incrementó el identificador de caché en [public/sw.js](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/public/sw.js) para forzar la purga y eliminación inmediata de cualquier caché antigua del navegador.
+- **Estrategia Network-First en Navegación**: Se asegura que con `F5` el navegador obtenga directamente del servidor el `index.html` actualizado, eliminando cualquier discrepancia entre recargas normales y forzadas.
+- **Modal de Actualización PWA**: Limpieza del texto en [PWAUpdateModal.tsx](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/src/components/PWAUpdateModal.tsx) para evitar confusiones de versión histórica.
+
+---
+
+## [2.1.5] - 2026-09-12
+
+### 🔐 Remediación Integral de Seguridad (Auditorías OpxSecOps SAST & Strix Pentest)
+- **Eliminación de Vulnerabilidades de Cadena de Suministro (`qs` vía `express`)**:
+  - Removidos 121 paquetes huérfanos de backend (`express`, `@types/express`, `@google/genai`, `dotenv`) de [package.json](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/package.json).
+  - Resueltas al 100% las vulnerabilidades `CVE-2026-82417` y `CVE-2026-82562` en `qs` detectadas por el escaneo dinámico de Strix.
+  - Resultado de auditoría limpia: `found 0 vulnerabilities`.
+- **Mitigación de Quota Exhaustion en LocalStorage (SEC-002)**:
+  - Implementada comprobación de cuota en bytes en [storage.ts](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/src/utils/storage.ts) con límites defensivos (`3 MB` para tareas, `512 KB` para perfil) previniendo pérdida silenciosa de datos o DoS de almacenamiento.
+- **Prevención de Bypass de Protocolos en Avatar URL (SEC-003)**:
+  - Normalización de URLs y lista negra estricta contra esquemas peligrosos (`javascript:`, `vbscript:`, `data:text/`, `data:application/`) con espacios o variantes unicode en [storage.ts](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/src/utils/storage.ts#L32-L55).
+- **Protección contra Prototype Pollution y Validación de Deserialización (SEC-004)**:
+  - Verificación exhaustiva al leer de LocalStorage en [storage.ts](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/src/utils/storage.ts#L60-L85), descartando claves maliciosas (`__proto__`, `constructor`, `prototype`), controlando longitudes máximas y validando enums de prioridad.
+- **XSS Defensivo en Detalles de Tarea (SEC-001)**:
+  - Añadida función `escapeHtml()` y advertencia formal en [TaskDescriptionModal.tsx](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/src/components/TaskDescriptionModal.tsx) para salvaguardar el contenido de la descripción ante futuras integraciones.
+- **Límites de Entrada en Formulario de Ajustes (SEC-005)**:
+  - Incorporada función `clampInput` y atributos HTML nativos `maxLength` en [AjustesScreen.tsx](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/src/components/AjustesScreen.tsx) (nombre 64, apellidos 64, bio 500 caracteres).
+- **Sanitización de Errores e Information Disclosure (SEC-006)**:
+  - En [ErrorBoundary.tsx](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/src/components/ErrorBoundary.tsx), sanitización de caracteres HTML y truncamiento a 400 caracteres para evitar filtración de stack traces o inyecciones.
+- **Validación Estricta en Creación de Tareas (SEC-007)**:
+  - En [App.tsx](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/src/App.tsx#L100-L125), validación de tipos, longitud de texto y descripción, y verificación del enum de prioridad.
+- **Defensa en Profundidad con Cabeceras HTTP de Seguridad (Recomendación Pentest Strix)**:
+  - Añadidos meta tags de `Referrer-Policy: strict-origin-when-cross-origin` y `X-Content-Type-Options: nosniff` en [index.html](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/index.html).
+  - Creado archivo [public/_headers](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/public/_headers) para despliegues estáticos (Cloudflare Pages / Netlify) con CSP, HSTS, X-Frame-Options DENY, X-Content-Type-Options nosniff y Permissions-Policy.
+  - Creada plantilla [nginx-security-headers.conf](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/nginx-security-headers.conf) lista para incluir en el servidor web de producción (`taskflow.1988dev.online`).
+  - Añadido script `npm run security-check` en [package.json](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/package.json) para auditoría de vulnerabilidades y verificación estática de TypeScript en un solo paso.
+- **Sincronización PWA**:
+  - Actualizado `CACHE_NAME` a `taskflow-v2.1.5` en [public/sw.js](file:///c:/Users/apokl/Desarrollo/Apps%20Curso/Tareas%20Personales/public/sw.js) y regenerada la distribución de producción en `dist/`.
+
 ---
 
 ## [2.1.4] - 2026-08-10

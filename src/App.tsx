@@ -99,13 +99,30 @@ export default function App() {
   };
 
   const handleAddTask = (text: string, priority: TaskPriority = 'media', description?: string) => {
+    // [PARCHE DEFENSIVO SEC-007]
+    // Validar longitud y tipo de 'text' antes de crear la tarea.
+    if (typeof text !== 'string' || text.trim().length === 0) return;
+    if (text.length > 4096) {
+      showToast('El texto de la tarea es demasiado largo (máx. 4096 caracteres).');
+      return;
+    }
+    if (description && description.length > 10000) {
+      showToast('La descripción es demasiado larga (máx. 10000 caracteres).');
+      return;
+    }
+    const VALID_PRIORITIES: TaskPriority[] = ['alta', 'media', 'baja'];
+    let safePriority = priority;
+    if (!VALID_PRIORITIES.includes(safePriority)) {
+      safePriority = 'media';
+    }
+
     const newTask: Task = {
       id: Date.now().toString(36) + Math.random().toString(36).substring(2, 7),
-      text,
+      text: text.trim(),
       description: description?.trim() || undefined,
       completed: false,
       createdAt: Date.now(),
-      priority,
+      priority: safePriority,
     };
     setTasks((prev) => [newTask, ...prev]);
     showToast('Nueva tarea añadida');

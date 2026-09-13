@@ -1,6 +1,21 @@
 import React, { useEffect } from 'react';
 import { Task } from '../types';
 
+/**
+ * [PARCHE DEFENSIVO SEC-001]
+ * Función que neutraliza caracteres HTML peligrosos en texto de usuario.
+ * Previene XSS reflejado si en el futuro se usa dangerouslySetInnerHTML
+ * o se inyecta texto en atributos HTML sin escapar.
+ */
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;');
+}
+
 interface TaskDescriptionModalProps {
   task: Task | null;
   onClose: () => void;
@@ -106,8 +121,10 @@ export const TaskDescriptionModal: React.FC<TaskDescriptionModalProps> = ({
             <label className="text-xs font-bold text-[#5b4139] uppercase tracking-wider block">
               Descripción Completa
             </label>
+            {/* SEC-001: Nunca usar dangerouslySetInnerHTML aquí; React escapa JSX por defecto.
+                La llamada a escapeHtml() es una capa defensiva extra si se migra a innerHTML. */}
             <div className="bg-[#fbf2ed] p-4 rounded-2xl border border-[#e4beb4]/40 text-sm text-[#1e1b18] leading-relaxed whitespace-pre-wrap font-sans break-words shadow-inner min-h-[100px]">
-              {task.description || 'Sin descripción adicional.'}
+              {task.description ? escapeHtml(task.description) : 'Sin descripción adicional.'}
             </div>
           </div>
 

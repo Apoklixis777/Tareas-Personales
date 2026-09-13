@@ -44,7 +44,7 @@ export const PWAUpdateModal: React.FC<PWAUpdateModalProps> = ({
             ¡Nueva Versión Disponible!
           </h2>
           <p className="text-xs sm:text-sm text-[#5b4139] leading-relaxed">
-            Hemos publicado mejoras de rendimiento, seguridad y experiencia en <strong className="text-[#ac2d00]">TaskFlow v2.0.0</strong>. Para disfrutar de la nueva versión, haz clic en actualizar.
+            Hemos publicado mejoras de rendimiento, seguridad y experiencia en <strong className="text-[#ac2d00]">TaskFlow</strong>. Para disfrutar de la nueva versión, haz clic en actualizar.
           </p>
         </div>
 

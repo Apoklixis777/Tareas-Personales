@@ -15,10 +15,25 @@ export class ErrorBoundary extends (React.Component as any)<Props, State> {
     errorMessage: '',
   };
 
+  /**
+   * [PARCHE DEFENSIVO SEC-006]
+   * Sanitizar el errorMessage antes de mostrarlo en la UI.
+   * Evita inyección de HTML o Information Disclosure excesivo si en el futuro
+   * se utiliza formato enriquecido. Trunca a 400 caracteres.
+   */
   static getDerivedStateFromError(error: Error): State {
+    const raw = error.message || 'Error inesperado en la aplicación.';
+    const sanitized = raw.replace(/[<>"'&]/g, (c) => ({
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#x27;',
+      '&': '&amp;',
+    }[c] || c));
+
     return {
       hasError: true,
-      errorMessage: error.message || 'Error inesperado en la aplicación.',
+      errorMessage: sanitized.slice(0, 400),
     };
   }
 

@@ -18,7 +18,9 @@ export function usePWAUpdate() {
     }
 
     // Production Service Worker registration & update tracking
-    navigator.serviceWorker.register('/sw.js').then((registration) => {
+    // updateViaCache: 'none' fuerza al navegador a SIEMPRE descargar sw.js de la red,
+    // ignorando la caché HTTP. Esto es la pieza clave que rompe el ciclo F5/Ctrl+F5.
+    navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' }).then((registration) => {
       // Check if there is already a waiting worker
       if (registration.waiting) {
         setWaitingWorker(registration.waiting);

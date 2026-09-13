@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self' ws: http: https:; object-src 'none'; base-uri 'self'; form-action 'self';" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>TaskFlow - Gestor de Tareas Personales</title>
     
     <!-- PWA Icons & Manifest -->
@@ -27,6 +30,30 @@
   </head>
   <body class="bg-[#fff8f5] text-[#1e1b18] antialiased">
     <div id="root"></div>
+    <script>
+      // Limpieza nuclear de Service Workers obsoletos.
+      // Se ejecuta ANTES de React para romper el ciclo de caché.
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(regs) {
+          regs.forEach(function(reg) {
+            reg.update().catch(function() {});
+            if (reg.waiting) {
+              reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+            }
+          });
+        });
+        // Limpiar cachés de versiones viejas
+        if ('caches' in window) {
+          caches.keys().then(function(names) {
+            names.forEach(function(name) {
+              if (name.indexOf('taskflow-') === 0 && name !== 'taskflow-v2.1.6') {
+                caches.delete(name);
+              }
+            });
+          });
+        }
+      }
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
